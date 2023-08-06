@@ -19,8 +19,17 @@ def about():
 	return render_template('admin.html')
 
 @app.route('/faculty')
-def contact():
-	return render_template('faculty.html')
+def faculty():
+	db = mysql.connector.connect (
+	host="localhost",
+	user="root",
+	password=sql_passwd,
+	database="lms"
+	)
+	cursor = db.cursor()
+	cursor.execute("SELECT * FROM books")
+	book_names = cursor.fetchall()
+	return render_template('faculty.html', book_names = book_names)
 
 @app.route('/student', methods=['GET', 'POST'])
 def student():
@@ -33,7 +42,7 @@ def student():
 	cursor = db.cursor()
 	cursor.execute("SELECT * FROM books")
 	book_names = cursor.fetchall()
-	return render_template('student.html', book_names=book_names)
+	return render_template('student.html', book_names = book_names)
 # ------------------------------
 
 # populating database
