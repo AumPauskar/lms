@@ -85,7 +85,9 @@ def student_borrow():
 
 	return "Book added"
 
-@app.route('/faculty_borrow', methods=['GET', 'POST'])
+# inserting values to db
+
+@app.route('/faculty_borrow', methods=['GET','POST'])
 def faculty_borrow():
 	# connecting to the sql db
 	db = mysql.connector.connect(
@@ -98,13 +100,18 @@ def faculty_borrow():
 
 	# getting form inputs
 	name = request.form["name"]
+
+
 	id = request.form["id"]
 	type = "FACULTY"
 
+	book_names = []
 	for i in range(1, 19):
 		book_name = request.form[f"book-{i}"]
-		print("Book name: ", book_name)
+		if book_name:
+			book_names.append(book_name)
 
+	for book_name in book_names:
 		# retrieving book id
 		query = 'SELECT book_id FROM books WHERE name = %s'
 		cursor.execute(query, (book_name,))
