@@ -48,8 +48,8 @@ INSERT INTO students (NAME, EMAIL, BOOKS_BORROWED, FINES) VALUES
 ("Abigail Harris", "abigail@example.com", 0, 0.00),
 ("Lucas Wilson", "lucas@example.com", 0, 0.00);
 
--- FACULTY TABLE, 20 VALUES
-INSERT INTO faculty (NAME, EMAIL, BOOKS_BORROWED, FINES) VALUES
+-- FACULTIES TABLE, 20 VALUES
+INSERT INTO faculties (NAME, EMAIL, BOOKS_BORROWED, FINES) VALUES
 ("Harper Lee", "harper@example.com", 0, 0.00),
 ("Liam Thomas", "liam@example.com", 0, 0.00),
 ("Ella Martinez", "ella@example.com", 0, 0.00),
@@ -68,4 +68,5 @@ INSERT INTO faculty (NAME, EMAIL, BOOKS_BORROWED, FINES) VALUES
 ("Elijah Wilson", "elijah@example.com", 0, 0.00),
 ("Penelope Martinez", "penelope@example.com", 0, 0.00),
 ("Grayson Johnson", "grayson@example.com", 0, 0.00),
-("Sofia Anderson", "sofia@example.com", 0, 0.00);
+("Sofia Anderson", "sofia@example.com", 0, 0.00),
+("Mia Johnson", "mia.johnson@example.com", 0, 0.00);
