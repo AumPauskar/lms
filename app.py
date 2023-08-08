@@ -1,11 +1,14 @@
 # importing libraries
-from flask import Flask, render_template, redirect, request
-import mysql.connector
-import os
+from flask import Flask, render_template, redirect, request # backend
+import mysql.connector 										# db connector
+import os 													# for getting environment variable
+import datetime												# getting current date
+
 # gets sql password from environment variable
 # refer README.md
 sql_passwd = os.environ.get("sql_key") 	
-
+date = datetime.date.today()
+final_date = date.today() + datetime.timedelta(days=15)
 
 
 app = Flask(__name__)
@@ -35,6 +38,24 @@ def faculty():
 
 @app.route('/student', methods=['GET', 'POST'])
 def student():
+	# connecting to the sql db
+	db = mysql.connector.connect(
+		host="localhost",
+		user="root",
+		password=sql_passwd,
+		database="lms"
+	)
+
+	# retriving book names
+	cursor = db.cursor()
+	cursor.execute("SELECT * FROM books") # operation on books table
+	book_names = cursor.fetchall()
+
+	return render_template('student.html', book_names = book_names)
+
+@app.route('/student_borrow', methods=['GET', 'POST'])
+def student_borrow():
+	# connecting to the sql db
 	db = mysql.connector.connect(
 		host="localhost",
 		user="root",
@@ -42,9 +63,60 @@ def student():
 		database="lms"
 	)
 	cursor = db.cursor()
-	cursor.execute("SELECT * FROM books")
-	book_names = cursor.fetchall()
-	return render_template('student.html', book_names = book_names)
+
+	# getting form inputs
+	name = request.form["name"]
+	id = request.form["id"]
+	type = "STUDENT"
+
+	for i in range(1, 7):
+		book_name = request.form[f"book-{i}"]
+		print("Book name: ", book_name)
+
+		# retrieving book id
+		query = 'SELECT book_id FROM books WHERE name = %s'
+		cursor.execute(query, (book_name,))
+		book_id = cursor.fetchone()
+		book_id = str(book_id[0]) # converts from tuple to string
+
+		# adds record in book_borrowings
+		cursor.execute('INSERT INTO book_borrowings (BOOK_ID, BORROWER_ID, BORROWER_TYPE, BORROWED_DATE, DUE_DATE) VALUES (%s, %s, %s, %s, %s)', (book_id, id, type, date, final_date))
+		db.commit()
+
+	return "Book added"
+
+@app.route('/faculty_borrow', methods=['GET', 'POST'])
+def faculty_borrow():
+	# connecting to the sql db
+	db = mysql.connector.connect(
+		host="localhost",
+		user="root",
+		password=sql_passwd,
+		database="lms"
+	)
+	cursor = db.cursor()
+
+	# getting form inputs
+	name = request.form["name"]
+	id = request.form["id"]
+	type = "FACULTY"
+
+	for i in range(1, 19):
+		book_name = request.form[f"book-{i}"]
+		print("Book name: ", book_name)
+
+		# retrieving book id
+		query = 'SELECT book_id FROM books WHERE name = %s'
+		cursor.execute(query, (book_name,))
+		book_id = cursor.fetchone()
+		book_id = str(book_id[0]) # converts from tuple to string
+
+		# adds record in book_borrowings
+		cursor.execute('INSERT INTO book_borrowings (BOOK_ID, BORROWER_ID, BORROWER_TYPE, BORROWED_DATE, DUE_DATE) VALUES (%s, %s, %s, %s, %s)', (book_id, id, type, date, final_date))
+		db.commit()
+
+	return "Book added"
+
 # ------------------------------
 
 # populating database
