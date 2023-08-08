@@ -2,7 +2,9 @@
 from flask import Flask, render_template, redirect, request
 import mysql.connector
 import os
-sql_passwd = os.environ.get("sql_key")
+# gets sql password from environment variable
+# refer README.md
+sql_passwd = os.environ.get("sql_key") 	
 
 
 
