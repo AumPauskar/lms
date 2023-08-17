@@ -174,5 +174,41 @@ def add():
 	Book author: {book_author}
 	Stock: {stock}'''
 
+# deleting books from database - admin panel
+@app.route('/delete', methods=['GET', 'POST'])
+def delete():
+	print("Delete function running")
+	book_id = request.form['book-id']
+
+	# delete books from books table via book_id
+	db = mysql.connector.connect(host="localhost",
+		user="root",
+		password=sql_passwd,
+		database="lms"
+	)
+	cursor = db.cursor()
+	cursor.execute('DELETE FROM books WHERE book_id = %s', (book_id,))
+	db.commit()
+	return f"Book id with {book_id} deleted"
+
+# changing stock of books - admin panel
+@app.route('/change_stock', methods=['GET', 'POST'])
+def change_stock():
+	print("Change stock function running")
+	book_id = request.form['book-id']
+	stock = request.form['stock']
+
+	# change stock of books from books table via book_id
+	db = mysql.connector.connect(host="localhost",
+		user="root",
+		password=sql_passwd,
+		database="lms"
+	)
+	cursor = db.cursor()
+	cursor.execute('UPDATE books SET stock = %s WHERE book_id = %s', (stock, book_id))
+	db.commit()
+	return f"Book id with {book_id} updated with stock {stock}"
+
+
 if __name__ == '__main__':
 	app.run(debug=True)
