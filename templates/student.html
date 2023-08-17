@@ -9,38 +9,38 @@
 </head>
 <body>
   <div class="container">
-    <h1>Book Selection</h1>
+    <h1 style="text-align: center">Book Selection</h1>
 		<!-- forms -->
-		<form action="/" method="post">
+		<form action="/student_borrow" method="post">
 			<!-- top two info -->
 			<div class="row">
 				<div class="col-md-6">
 					<label for="name">Name</label>
-					<input type="text" class="form-control" id="name">
+					<input type="text" class="form-control" id="name" name="name">
 				</div>
 				<div class="col-md-6">
 					<label for="id">ID</label>
-					<input type="text" class="form-control" id="id">
+					<input type="text" class="form-control" id="id" name="id">
 				</div>
 			</div>
 			<div class="row">
 					<div class="col-md-6">
 						<label for="book-1">Book 1</label>
-						<select class="form-control" id="book-1">
+						<select class="form-control" id="book-1" name="book-1">
 						{% for book_name in book_names %}
 							<option value="{{ book_name[1] }}">{{ book_name[1] }}</option>
 						{% endfor %}
 						</select>
 
 						<label for="book-2">Book 2</label>
-						<select class="form-control" id="book-2">
+						<select class="form-control" id="book-2" name="book-2">
 						{% for book_name in book_names %}
 							<option value="{{ book_name[1] }}">{{ book_name[1] }}</option>
 						{% endfor %}
 						</select>
 
 						<label for="book-3">Book 3</label>
-						<select class="form-control" id="book-3">
+						<select class="form-control" id="book-3" name="book-3">
 						{% for book_name in book_names %}
 							<option value="{{ book_name[1] }}">{{ book_name[1] }}</option>
 						{% endfor %}
@@ -49,27 +49,29 @@
 
 					<div class="col-md-6">
 						<label for="book-4">Book 4</label>
-						<select class="form-control" id="book-4">
+						<select class="form-control" id="book-4" name="book-4">
 						{% for book_name in book_names %}
 							<option value="{{ book_name[1] }}">{{ book_name[1] }}</option>
 						{% endfor %}
 						</select>
 
 						<label for="book-5">Book 5</label>
-						<select class="form-control" id="book-5">
+						<select class="form-control" id="book-5" name="book-5">
 						{% for book_name in book_names %}
 							<option value="{{ book_name[1] }}">{{ book_name[1] }}</option>
 						{% endfor %}
 						</select>
 
 						<label for="book-6">Book 6</label>
-						<select class="form-control" id="book-6">
+						<select class="form-control" id="book-6" name="book-6">
 						{% for book_name in book_names %}
 							<option value="{{ book_name[1] }}">{{ book_name[1] }}</option>
 						{% endfor %}
 						</select>
 					</div>
 				</div>
+		<button type="submit" class="btn btn-primary">Submit</button>
+
 			</form>
   </div>
 </body>
