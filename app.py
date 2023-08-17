@@ -78,6 +78,20 @@ def student_borrow():
 		cursor.execute(query, (book_name,))
 		book_id = cursor.fetchone()
 		book_id = str(book_id[0]) # converts from tuple to string
+		
+		# checking if book is available or out of stock
+		query = 'SELECT stock FROM books WHERE name = %s'
+		cursor.execute(query, (book_name,))
+		stock = cursor.fetchone()
+		stock = str(stock[0]) # converts from tuple to string
+
+		if stock == '0':
+			# code breaks over here due to return statement
+			return "Book out of stock"
+		
+		# reducing the stock by 1
+		stock = int(stock) - 1
+		cursor.execute('UPDATE books SET stock = %s WHERE name = %s', (stock, book_name))
 
 		# adds record in book_borrowings
 		cursor.execute('INSERT INTO book_borrowings (BOOK_ID, BORROWER_ID, BORROWER_TYPE, BORROWED_DATE, DUE_DATE) VALUES (%s, %s, %s, %s, %s)', (book_id, id, type, date, final_date))
@@ -117,6 +131,20 @@ def faculty_borrow():
 		cursor.execute(query, (book_name,))
 		book_id = cursor.fetchone()
 		book_id = str(book_id[0]) # converts from tuple to string
+
+		# checking if book is available or out of stock
+		query = 'SELECT stock FROM books WHERE name = %s'
+		cursor.execute(query, (book_name,))
+		stock = cursor.fetchone()
+		stock = str(stock[0]) # converts from tuple to string
+
+		if stock == '0':
+			# code breaks over here due to return statement
+			return "Book out of stock"
+		
+		# reducing the stock by 1
+		stock = int(stock) - 1
+		cursor.execute('UPDATE books SET stock = %s WHERE name = %s', (stock, book_name))
 
 		# adds record in book_borrowings
 		cursor.execute('INSERT INTO book_borrowings (BOOK_ID, BORROWER_ID, BORROWER_TYPE, BORROWED_DATE, DUE_DATE) VALUES (%s, %s, %s, %s, %s)', (book_id, id, type, date, final_date))
