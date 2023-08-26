@@ -55,6 +55,19 @@ env\Scripts\activate.ps1
 1. The return date is 15 days after the borrowing date
 2. Student ID is incremented for easy use
 
+## UI
+Here are some of the screenshots of the User Interface of the project
+- Home page
+![home page](docs/screenshots/home%20page.png)
+
+- Adding books
+![adding books students](docs/screenshots/adding%20books%20-%20student.png)
+![adding books faculty](docs/screenshots/adding%20books%20-%20faculty.png)
+
+- Admin panel
+![admin panel](docs/screenshots/admin%20-%20add%20books.png)
+
+This is the structure 
 ## Notes
 The software is created within a python virtual environment and using a Windows NT kernel (Win 11).
 
