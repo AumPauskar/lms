@@ -3,6 +3,8 @@ from flask import Flask, render_template, redirect, request # backend
 import mysql.connector 										# db connector
 import os 													# for getting environment variable
 import datetime												# getting current date
+import csv													# writing to csv file
+
 
 # gets sql password from environment variable
 # refer README.md
@@ -96,6 +98,11 @@ def student_borrow():
 		# adds record in book_borrowings
 		cursor.execute('INSERT INTO book_borrowings (BOOK_ID, BORROWER_ID, BORROWER_TYPE, BORROWED_DATE, DUE_DATE) VALUES (%s, %s, %s, %s, %s)', (book_id, id, type, date, final_date))
 		db.commit()
+
+		# writing to csv file student - record.csv
+		with open('student-record.csv', 'a', newline='') as file:
+			writer = csv.writer(file)
+			writer.writerow([name, id, book_name, book_id, date, final_date])
 
 	return "Book added"
 
